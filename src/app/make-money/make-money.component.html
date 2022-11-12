@@ -1,0 +1,10 @@
+
+<div *ngIf="user" class="container">
+    <div *ngIf="gettingPaid(); else elseBlock">
+        <h1>Hello {{user.username}}</h1>
+        <p> You have: {{moneyPayment | currency}}</p>
+    </div>
+    <ng-template #elseBlock>
+        <p>Hey {{user.username}} Enjoy your day off!</p>
+    </ng-template>
+</div>

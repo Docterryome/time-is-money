@@ -1,26 +1,51 @@
-<form [formGroup]="userForm">
-    <label for="username">username</label>
-    <input id="username" type="text" formControlName="username"/>
-    <label for="initialcash">Starting Cash</label>
-    <input id="initialcash" type="number" step="0.01" formControlName="initialCash" />
-    <ng-container *ngFor="let enum of payType | keyvalue">
-        <label for="{{enum.key}}">{{enum.key}}</label>
-        <input type="radio" id="{{enum.key}}" formControlName="paymentType" value="{{enum.value}}"/>
-    </ng-container>
-    <label for="pay">Pay</label>
-    <input id="pay" type="number" step="0.01" formControlName="pay" />
-    <label for="workstart">Start Working: </label>
-    <input id="workstart" type="number" formControlName="workstart" max="24" />
-    <label for="workend">End Working: </label>
-    <input id="workend" type="number" formControlName="workend" max="24" />
-    <div formArrayName="workdays">
-        <div *ngFor="let day of workdays.controls; let i=index"  [formGroupName]="i">
-            <label>{{keys[i]}}</label>
-            <input type="checkbox" [formControlName]="keys[i]"/>
+
+<div class="container text-center">
+
+    <form [formGroup]="userForm">
+        <div class="row form-element">
+            <div class="col-sm-6">
+                <label class="form-label" for="username">Username</label>
+                <input class="form-control" id="username" type="text" formControlName="username"/>
+            </div>
+
+            <div class="col-sm-6">
+                <label class="form-label" for="initialcash">Starting Cash</label>
+                <input class="form-control" id="initialcash" type="number" step="0.01" formControlName="initialCash" />
+            </div>
         </div>
-    </div>
-    <button (click)="submit()">Submit</button>
-</form>
-<p>
-    {{ userForm.value | json}}
-</p>
+
+        <div class="row form-element">
+            <div class="col-sm-12">
+                <label class="form-lable" for="pay" for="pay">Pay</label>
+                <input id="pay" class="form-control" type="number" step="0.01" formControlName="pay" />
+            </div>
+        </div>
+        <div class="row form-element">
+            <div class="col-sm-12">
+                <p class="divider">PaymentType</p>
+                <div class="form-check form-check-inline" *ngFor="let enum of payType | keyvalue">
+                    <label class="form-check-label" for="{{enum.key}}">{{enum.key}}</label>
+                    <input class="form-check-input" type="radio" id="{{enum.key}}" formControlName="paymentType" value="{{enum.value}}"/>
+                </div>
+            </div>
+        </div>
+        <div class="row form-element">
+            <div class="col-sm-6">
+                <label class="form-label" for="workstart">Start Working</label>
+                <input class="form-control" id="workstart" type="number" formControlName="workstart" max="24" />
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label" for="workend">End Working</label>
+                <input class="form-control" id="workend" type="number" formControlName="workend" max="24" />
+            </div>
+        </div>
+            <div class="row form-element" formArrayName="workdays">
+                <p class="divider">Workdays</p>
+                <div class="form-check form-check-inline col-sm-1 text-left" *ngFor="let day of workdays.controls; let i=index"  [formGroupName]="i">
+                    <label class="form-check-label">{{keys[i]}}</label>
+                    <input class="form-check-input" type="checkbox" [formControlName]="keys[i]"/>
+                </div>
+            </div>
+            <button class="btn btn-primary" (click)="submit()">Submit</button>
+        </form>
+</div>

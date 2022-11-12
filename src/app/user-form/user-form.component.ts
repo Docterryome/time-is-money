@@ -3,6 +3,8 @@ import { ControlContainer, Form, FormArray, FormBuilder, FormControl, FormGroup,
 import { days } from '../days';
 import { paymentType } from '../paymentType';
 import { moneyUser } from '../moneyuser';
+import { Router } from '@angular/router';
+import { PaymentService } from '../payment.service';
 
 @Component({
   selector: 'app-user-form',
@@ -11,17 +13,17 @@ import { moneyUser } from '../moneyuser';
 })
 export class UserFormComponent implements OnInit {
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private router: Router, private paymentService: PaymentService) { }
   public payType = paymentType
   public daysOfWeek = days
   public keys: string[] = Object.keys(this.daysOfWeek)
   userForm: FormGroup = this.fb.group({
     username: ['', Validators.required],
-    initialCash: [0],
+    initialCash: [],
     paymentType: [paymentType, Validators.required],
-    pay: [0, Validators.required],
-    workstart: [0],
-    workend: [0],
+    pay: [, Validators.required],
+    workstart: [],
+    workend: [],
     workdays: this.fb.array([])
   })
 
@@ -40,7 +42,6 @@ export class UserFormComponent implements OnInit {
       const fg = this.fb.group({})
       fg.addControl(key, this.fb.control(false))
       this.workdays.push(fg)
-      console.log(fg)
       }
     )
   }
@@ -72,6 +73,7 @@ export class UserFormComponent implements OnInit {
       workend: workend,
       workdays: workdays
     }
-    console.log(user)
+    this.paymentService.addUser(user)
+    this.router.navigate(['/money'])
   }
 }
